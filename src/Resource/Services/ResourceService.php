@@ -1,13 +1,13 @@
 <?php
 
 
-namespace Lms\Resource\Service;
+namespace Lms\Resource\Services;
 
 
 use Lms\Resource\Entity\Resource;
 use Lms\Resource\Entity\ResourceId;
 use Lms\Resource\Repository\ResourceRepository;
-use Lms\Resource\Service\Command\CreateResource;
+use Lms\Resource\Services\Command\CreateResource;
 
 final class ResourceService
 {

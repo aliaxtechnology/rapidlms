@@ -1,7 +1,7 @@
 <?php
 
 
-namespace Lms\Resource\Service\Command;
+namespace Lms\Resource\Services\Command;
 
 
 final class CreateResource
