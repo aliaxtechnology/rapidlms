@@ -6,8 +6,8 @@ namespace Lms\Tests\Unit;
 
 use Lms\Resource\Entity\ResourceId;
 use Lms\Resource\Repository\ResourceRepository;
-use Lms\Resource\Service\Command\CreateResource;
-use Lms\Resource\Service\ResourceService;
+use Lms\Resource\Services\Command\CreateResource;
+use Lms\Resource\Services\ResourceService;
 use PHPUnit\Framework\TestCase;
 
 final class ResourceServiceTest extends TestCase
