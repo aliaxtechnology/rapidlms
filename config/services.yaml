@@ -13,18 +13,22 @@ services:
 
     # makes classes in src/ available to be used as services
     # this creates a service per class whose id is the fully-qualified class name
-    Lms\:
-        resource: '../src/'
+    Lms\Core\:
+        resource: '../src/Core/'
         exclude:
-            - '../src/DependencyInjection/'
-            - '../src/Entity/'
-            - '../src/Kernel.php'
-            - '../src/Tests/'
+            - '../src/Core/DependencyInjection/'
+            - '../src/Core/Entity/'
+
+    Lms\Resource\:
+        resource: '../src/Resource/'
+        exclude:
+            - '../src/Resource/DependencyInjection/'
+            - '../src/Resource/Entity/'
 
     # controllers are imported separately to make sure services can be injected
     # as action arguments even if you don't extend any base controller class
-    Lms\Controller\:
-        resource: '../src/Controller/'
+    Lms\Resource\Controller\:
+        resource: '../src/Resource/Controller/'
         tags: ['controller.service_arguments']
 
     # add more service definitions when explicit configuration is needed
