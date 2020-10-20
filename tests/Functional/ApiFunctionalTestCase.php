@@ -3,20 +3,33 @@
 
 namespace Lms\Tests\Functional;
 
-
-use Symfony\Bundle\FrameworkBundle\KernelBrowser;
+use Symfony\Bundle\FrameworkBundle\Console\Application;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
+use Symfony\Component\Console\Input\StringInput;
+
 
 abstract class ApiFunctionalTestCase extends WebTestCase
 {
 
-    public function post(string $route, array $data = array()): KernelBrowser
+    protected $client;
+
+    public function setUp()
     {
-        $client = static::createClient();
-        $client->request('POST', $route, [], [],
+        parent::setUp();
+        $this->client = static::createClient();
+
+        $application = new Application(self::$kernel);
+        $application->setAutoExit(false);
+
+        $application->run(new StringInput('doctrine:migrations:migrate --env=test -n'));
+
+    }
+
+    public function post(string $route, array $data = array()): void
+    {
+        $this->client->request('POST', $route, [], [],
             ['CONTENT_TYPE' => 'application/json'],
             json_encode($data));
-
-        return $client;
     }
+
 }
