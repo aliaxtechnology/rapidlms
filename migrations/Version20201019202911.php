@@ -1,31 +1,37 @@
 <?php
 
-declare(strict_types=1);
-
 namespace DoctrineMigrations;
 
 use Doctrine\DBAL\Schema\Schema;
-use Doctrine\Migrations\AbstractMigration;
+use Lms\Core\Migrations\BaseMigration;
 
 /**
  * Auto-generated Migration: Please modify to your needs!
  */
-final class Version20201019202911 extends AbstractMigration
+final class Version20201019202911 extends BaseMigration
 {
     public function getDescription() : string
     {
         return '';
     }
 
-    public function up(Schema $schema) : void
+    protected function upMysSql(Schema $schema): void
     {
-        // this up() migration is auto-generated, please modify it to your needs
-        $this->addSql('create table resource_sequence ( id int auto_increment primary key );');
+        $this->addSql('CREATE TABLE resource_sequence ( id INT AUTO_INCREMENT PRIMARY KEY );');
     }
 
-    public function down(Schema $schema) : void
+    protected function downMysSql(Schema $schema): void
     {
-        // this down() migration is auto-generated, please modify it to your needs
+        $this->addSql('DROP TABLE resource_sequence');
+    }
+
+    protected function upSqlite(Schema $schema): void
+    {
+        $this->addSql('CREATE TABLE resource_sequence ( id INT AUTO_INCREMENT PRIMARY KEY);');
+    }
+
+    protected function downSqlite(Schema $schema): void
+    {
         $this->addSql('DROP TABLE resource_sequence');
     }
 }
