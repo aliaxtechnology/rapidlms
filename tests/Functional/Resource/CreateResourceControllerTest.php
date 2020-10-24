@@ -12,7 +12,9 @@ final class CreateResourceControllerTest extends ApiFunctionalTestCase
     public function testCreateResource()
     {
         $this->post('/resources', [
-            'name' => 'module de test'
+            'name' => 'module de test',
+            'type' => 'quiz',
+            'preview' => 1
         ]);
 
 

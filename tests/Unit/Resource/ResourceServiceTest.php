@@ -1,7 +1,7 @@
 <?php
 
 
-namespace Lms\Tests\Unit;
+namespace Lms\Tests\Unit\Resource;
 
 
 use Lms\Resource\Entity\ResourceType;
