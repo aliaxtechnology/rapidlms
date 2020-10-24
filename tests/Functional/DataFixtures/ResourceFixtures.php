@@ -4,15 +4,18 @@ namespace Lms\Tests\Functional\DataFixtures;
 
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
-use Lms\Storage\Entity\File;
-use Lms\Storage\Entity\FileId;
+use Lms\Resource\Entity\PreviewId;
+use Lms\Resource\Entity\Resource;
+use Lms\Resource\Entity\ResourceId;
+use Lms\Resource\Entity\ResourceType;
 
-class FileFixtures extends Fixture
+
+class ResourceFixtures extends Fixture
 {
     public function load(ObjectManager $manager)
     {
         for ($index = 1; $index <= 10; $index++) {
-            $file = File::create(new FileId($index), "preview_{$index}.png", 'previews', 'local');
+            $file = Resource::create(new ResourceId($index), "un module au hasard {$index}", ResourceType::fromString('quiz'), new PreviewId(1));
             $manager->persist($file);
         }
 
