@@ -3,6 +3,10 @@
 
 namespace Lms\Tests\Functional;
 
+use Doctrine\Common\DataFixtures\Executor\ORMExecutor;
+use Doctrine\Common\DataFixtures\FixtureInterface;
+use Doctrine\Common\DataFixtures\Purger\ORMPurger;
+use Symfony\Bridge\Doctrine\DataFixtures\ContainerAwareLoader;
 use Symfony\Bundle\FrameworkBundle\Console\Application;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\Console\Input\StringInput;
@@ -25,11 +29,23 @@ abstract class ApiFunctionalTestCase extends WebTestCase
 
     }
 
-    public function post(string $route, array $data = array()): void
+    protected function post(string $route, array $data = array()): void
     {
         $this->client->request('POST', $route, [], [],
             ['CONTENT_TYPE' => 'application/json'],
             json_encode($data));
+    }
+
+
+    protected function loadFixture(FixtureInterface $fixture): void
+    {
+        $fixtureLoader = new ContainerAwareLoader(self::$kernel->getContainer());
+        $fixtureLoader->addFixture($fixture);
+
+        $entityManager = self::$kernel->getContainer()->get('doctrine')->getManager();
+
+        $executor = new ORMExecutor($entityManager, new ORMPurger($entityManager));
+        $executor->execute($fixtureLoader->getFixtures());
     }
 
 }
