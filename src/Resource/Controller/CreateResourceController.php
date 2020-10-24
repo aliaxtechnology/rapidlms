@@ -48,6 +48,6 @@ final class CreateResourceController
 
         $resourceId = $this->resourceService->create($command);
 
-        return new SuccessResponse(['resource_id' => $resourceId->asString()]);
+        return new SuccessResponse(['resource_id' => (int) $resourceId->asString()]);
     }
 }

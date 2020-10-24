@@ -8,6 +8,7 @@ use Doctrine\Common\DataFixtures\FixtureInterface;
 use Doctrine\Common\DataFixtures\Purger\ORMPurger;
 use Symfony\Bridge\Doctrine\DataFixtures\ContainerAwareLoader;
 use Symfony\Bundle\FrameworkBundle\Console\Application;
+use Symfony\Bundle\FrameworkBundle\KernelBrowser;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\Console\Input\StringInput;
 
@@ -15,7 +16,7 @@ use Symfony\Component\Console\Input\StringInput;
 abstract class ApiFunctionalTestCase extends WebTestCase
 {
 
-    protected $client;
+    protected KernelBrowser $client;
 
     public function setUp()
     {

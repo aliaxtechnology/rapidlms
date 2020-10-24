@@ -20,7 +20,9 @@ final class CreateResourceControllerTest extends ApiFunctionalTestCase
             'preview' => 1
         ]);
 
-
         $this->assertResponseIsSuccessful();
+
+        $expected = json_encode(['data' => ['resource_id' => 1]]);
+        $this->assertSame($expected, $this->client->getResponse()->getContent());
     }
 }
