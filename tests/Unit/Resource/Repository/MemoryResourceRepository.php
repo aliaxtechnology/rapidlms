@@ -28,6 +28,11 @@ class MemoryResourceRepository implements ResourceRepository
         return new ResourceId($this->sequenceId);
     }
 
+    public function getById(ResourceId $id): Resource
+    {
+        return $this->resources[$id->asString()];
+    }
+
     public function save(Resource $resource): void
     {
         $this->resources[$resource->id()->asString()] = $resource;

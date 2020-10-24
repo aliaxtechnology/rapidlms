@@ -26,6 +26,11 @@ final class ResourceId
         $this->id = $id;
     }
 
+    public static function fromString(string $id): self
+    {
+        return new self((int) $id);
+    }
+
     public function asString(): string
     {
         return (string) $this->id;

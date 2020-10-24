@@ -9,6 +9,7 @@ use Lms\Resource\Entity\Resource;
 use Lms\Resource\Entity\ResourceId;
 use Lms\Resource\Entity\ResourceType;
 use Lms\Resource\Services\Command\CreateResource;
+use Lms\Resource\Services\Command\UpdateResource;
 use Lms\Resource\Services\ResourceService;
 use Lms\Storage\Entity\File;
 use Lms\Storage\Entity\FileId;
@@ -48,10 +49,11 @@ final class ResourceServiceTest extends TestCase
             'name' => 'Module 7'
         ]);
 
+        $resourceId = new ResourceId(1);
         $resourceRepo = new MemoryResourceRepository([
-            Resource::create(new ResourceId(1),
+            $resourceId->asString() => Resource::create($resourceId,
                 'Module 4',
-                ResourceType::QUIZ,
+                ResourceType::fromString('quiz'),
                 new PreviewId(14)
             )
         ]);
@@ -61,9 +63,9 @@ final class ResourceServiceTest extends TestCase
         $service = new ResourceService($resourceRepo, $fileRepo);
         $service->update($command);
 
-        $resource = $resourceRepo->getById(1);
+        $resource = $resourceRepo->getById($resourceId);
 
         // THEN
-        $this->assertEquals('Module 6', $resource->name());
+        $this->assertEquals('Module 7', $resource->name());
     }
 }

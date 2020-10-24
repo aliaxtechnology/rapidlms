@@ -9,18 +9,14 @@ use Lms\Resource\Entity\Resource;
 use Lms\Resource\Entity\ResourceId;
 use Lms\Resource\Repository\ResourceRepository;
 use Lms\Resource\Services\Command\CreateResource;
+use Lms\Resource\Services\Command\UpdateResource;
 use Lms\Storage\Repository\FileRepository;
 
 final class ResourceService
 {
 
-    /**
-     * @var ResourceRepository
-     */
     private ResourceRepository $resourceRepository;
-    /**
-     * @var FileRepository
-     */
+
     private FileRepository $fileRepository;
 
     public function __construct(ResourceRepository $resourceRepository, FileRepository $fileRepository)
@@ -45,5 +41,15 @@ final class ResourceService
         $this->resourceRepository->save($resource);
 
         return $resourceId;
+    }
+
+
+    public function update(UpdateResource $command): void
+    {
+        $resource = $this->resourceRepository->getById($command->id());
+
+        $command->editName(fn (string $name) => $resource->rename($name));
+
+        $this->resourceRepository->save($resource);
     }
 }
