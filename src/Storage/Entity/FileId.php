@@ -1,19 +1,17 @@
 <?php
 
 
-namespace Lms\Resource\Entity;
-
+namespace Lms\Storage\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Class ResourceId
- * @package Lms\Resource\Entity
+ * Class FileId
+ * @package Lms\Storage\Entity
  * @ORM\Embeddable()
  */
-final class ResourceId
+final class FileId
 {
-
     /**
      * @ORM\Id()
      * @ORM\GeneratedValue(strategy="NONE")
@@ -24,6 +22,11 @@ final class ResourceId
     public function __construct(int $id)
     {
         $this->id = $id;
+    }
+
+    public static function fromString(string $id): self
+    {
+        return new self((int) $id);
     }
 
     public function asString(): string

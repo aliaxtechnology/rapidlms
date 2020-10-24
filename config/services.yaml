@@ -19,6 +19,12 @@ services:
             - '../src/Core/DependencyInjection/'
             - '../src/Core/Entity/'
 
+    Lms\Storage\:
+        resource: '../src/Storage/'
+        exclude:
+            - '../src/Storage/DependencyInjection/'
+            - '../src/Storage/Entity/'
+
     Lms\Resource\:
         resource: '../src/Resource/'
         exclude:

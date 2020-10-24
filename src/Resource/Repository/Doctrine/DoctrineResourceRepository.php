@@ -28,7 +28,7 @@ class DoctrineResourceRepository implements ResourceRepository
     {
         $id = $this->em->getConnection()->transactional(function (Connection $connection) {
 
-            $connection->executeStatement('INSERT INTO resource_sequence DEFAULT VALUES');
+            $connection->executeStatement('INSERT INTO resource_sequence (id) VALUES (null)');
 
             return $connection->lastInsertId();
         });
