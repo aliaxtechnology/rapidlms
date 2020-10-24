@@ -16,6 +16,7 @@ final class ResourceId
 
     /**
      * @ORM\Id()
+     * @ORM\GeneratedValue(strategy="NONE")
      * @ORM\Column(type = "integer", name="id")
      */
     private int $id;
