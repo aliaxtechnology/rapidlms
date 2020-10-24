@@ -10,9 +10,17 @@ doctrine:
         naming_strategy: doctrine.orm.naming_strategy.underscore_number_aware
         auto_mapping: true
         mappings:
-            Lms:
+            Lms\Resource:
                 is_bundle: false
                 type: annotation
                 dir: '%kernel.project_dir%/src/Resource/Entity'
                 prefix: 'Lms\Resource\Entity'
-                alias: Lms
+                alias: Lms\Resource
+
+            Lms\Storage:
+                is_bundle: false
+                type: annotation
+                dir: '%kernel.project_dir%/src/Storage/Entity'
+                prefix: 'Lms\Storage\Entity'
+                alias: Lms\Storage
+
