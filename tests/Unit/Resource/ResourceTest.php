@@ -9,6 +9,7 @@ use Lms\Resource\Entity\Resource;
 use Lms\Resource\Entity\ResourceId;
 use Lms\Resource\Entity\ResourceType;
 use Lms\Resource\Event\ResourceCreated;
+use Lms\Resource\Event\ResourceRenamed;
 use PHPUnit\Framework\TestCase;
 
 class ResourceTest extends TestCase
@@ -43,7 +44,8 @@ class ResourceTest extends TestCase
 
     public function testResourceChangeName() {
         // GIVEN
-        $resource = Resource::create(new ResourceId(1),
+        $resourceId = new ResourceId(1);
+        $resource = Resource::create($resourceId,
             'Module 1',
             ResourceType::fromString('quiz'),
             new PreviewId(5)
@@ -59,6 +61,7 @@ class ResourceTest extends TestCase
         $this->assertInstanceOf(ResourceRenamed::class, $events[1]);
 
         $expected = [
+            'resource_id' => $resourceId->asString(),
             'name' => 'Module 7',
         ];
         $this->assertSame($expected, $events[1]->asArray());

@@ -3,8 +3,10 @@
 
 namespace Lms\Resource\Entity;
 
+use Assert\Assertion;
 use Doctrine\ORM\Mapping as ORM;
 use Lms\Resource\Event\ResourceCreated;
+use Lms\Resource\Event\ResourceRenamed;
 
 /**
  * @ORM\Entity()
@@ -53,6 +55,14 @@ final class Resource
     public function id(): ResourceId
     {
         return $this->id;
+    }
+
+    public function rename(string $name): void {
+        Assertion::notBlank($name);
+
+        $this->name = $name;
+
+        $this->events[] = new ResourceRenamed($this->id, $name);
     }
 
     public function popEvents(): array {
