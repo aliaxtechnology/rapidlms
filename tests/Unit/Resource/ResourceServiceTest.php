@@ -4,6 +4,9 @@
 namespace Lms\Tests\Unit\Resource;
 
 
+use Lms\Resource\Entity\PreviewId;
+use Lms\Resource\Entity\Resource;
+use Lms\Resource\Entity\ResourceId;
 use Lms\Resource\Entity\ResourceType;
 use Lms\Resource\Services\Command\CreateResource;
 use Lms\Resource\Services\ResourceService;
@@ -34,5 +37,33 @@ final class ResourceServiceTest extends TestCase
 
         // THEN
         $this->assertEquals(1, $resourceId->asString());
+    }
+
+
+    public function testChangeNameResourceService()
+    {
+        // GIVEN
+        $command = UpdateResource::fromRequest([
+            'resource_id' => 1,
+            'name' => 'Module 7'
+        ]);
+
+        $resourceRepo = new MemoryResourceRepository([
+            Resource::create(new ResourceId(1),
+                'Module 4',
+                ResourceType::QUIZ,
+                new PreviewId(14)
+            )
+        ]);
+        $fileRepo = new MemoryFileRepository();
+
+        // WHEN
+        $service = new ResourceService($resourceRepo, $fileRepo);
+        $service->update($command);
+
+        $resource = $resourceRepo->getById(1);
+
+        // THEN
+        $this->assertEquals('Module 6', $resource->name());
     }
 }

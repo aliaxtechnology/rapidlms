@@ -13,7 +13,7 @@ class MemoryFileRepository implements FileRepository
 
     private array $files;
 
-    public function __construct(array $files)
+    public function __construct(array $files = [])
     {
         $this->files = $files;
     }
