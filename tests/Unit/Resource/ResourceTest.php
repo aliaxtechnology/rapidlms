@@ -39,6 +39,28 @@ class ResourceTest extends TestCase
             'preview_id' => $previewId->asString(),
         ];
         $this->assertSame($expected, $events[0]->asArray());
+    }
 
+    public function testResourceChangeName() {
+        // GIVEN
+        $resource = Resource::create(new ResourceId(1),
+            'Module 1',
+            ResourceType::fromString('quiz'),
+            new PreviewId(5)
+        );
+
+        // WHEN
+        $resource->rename("Module 7");
+
+        // THEN
+        $events = $resource->popEvents();
+
+        $this->assertCount(2, $events);
+        $this->assertInstanceOf(ResourceRenamed::class, $events[1]);
+
+        $expected = [
+            'name' => 'Module 7',
+        ];
+        $this->assertSame($expected, $events[1]->asArray());
     }
 }
