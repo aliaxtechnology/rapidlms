@@ -9,7 +9,7 @@ use Lms\Resource\Event\ResourceCreated;
 /**
  * @ORM\Entity()
  */
-class Resource
+final class Resource
 {
     /**
      * @ORM\Embedded(class="ResourceId", columnPrefix=false)
@@ -50,6 +50,10 @@ class Resource
         return $resource;
     }
 
+    public function id(): ResourceId
+    {
+        return $this->id;
+    }
 
     public function popEvents(): array {
         return $this->events;
