@@ -26,17 +26,9 @@ abstract class ApiFunctionalTestCase extends WebTestCase
         $application = new Application(self::$kernel);
         $application->setAutoExit(false);
 
-        $application->run(new StringInput('doctrine:migrations:migrate --env=test -n'));
+        $application->run(new StringInput('doctrine:migrations:migrate --env=test -n -q'));
 
     }
-
-    protected function post(string $route, array $data = array()): void
-    {
-        $this->client->request('POST', $route, [], [],
-            ['CONTENT_TYPE' => 'application/json'],
-            json_encode($data));
-    }
-
 
     protected function loadFixture(FixtureInterface $fixture): void
     {
@@ -47,6 +39,23 @@ abstract class ApiFunctionalTestCase extends WebTestCase
 
         $executor = new ORMExecutor($entityManager, new ORMPurger($entityManager));
         $executor->execute($fixtureLoader->getFixtures());
+    }
+
+    protected function post(string $route, array $data = array()): void
+    {
+        $this->request('POST', $route, $data);
+    }
+
+    protected function put(string $route, array $data = array()): void
+    {
+        $this->request('PUT', $route, $data);
+    }
+
+    private function request(string $methode, string $route, array $data = array()): void
+    {
+        $this->client->request($methode, $route, [], [],
+            ['CONTENT_TYPE' => 'application/json'],
+            json_encode($data));
     }
 
 }
